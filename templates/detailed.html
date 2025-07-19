@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+
+{% block myheading %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ applicant.get_full_name }}'s Portfolio</h2>
+    </div>
+    <div class="card-body">
+        {% if portfolio %}
+            <h3 class="card-title">{{ project.portfolio_title }}</h3>
+            <p class="card-text">{{ portfolio.portfolio_description }}</p>
+
+            <h4 class="mt-4">Projects</h4>
+            <ul class="list-group">
+                {% for project in portfolio.projects.all %}
+                <li class="list-group-item">
+                    <h5>{{ project.project_name }}</h5>
+                    <p>{{ project.project_description }}</p>
+                    <small>Created: {{ project.created_at|date:"M d, Y" }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No portfolio available for this applicant.</p>
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'applicant_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}
